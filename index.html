@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ระบบ E-Learning ขั้นสูง</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4e46dc;
+      --primary-light: #7b74e8;
+      --secondary-color: #ff6b6b;
+      --success-color: #51cf66;
+      --warning-color: #fcc419;
+      --text-color: #333;
+      --light-gray: #f8f9fa;
+      --medium-gray: #e9ecef;
+      --dark-gray: #495057;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: var(--light-gray);
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+      color: var(--white);
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+    
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 2rem auto;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    .container:hover {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-weight: 500;
+      border-bottom: 2px solid var(--medium-gray);
+      padding-bottom: 0.8rem;
+    }
+    
+    button {
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    button:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+    
+    button i {
+      margin-right: 0.5rem;
+    }
+    
+    .btn-secondary {
+      background: var(--medium-gray);
+      color: var(--text-color);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--dark-gray);
+      color: var(--white);
+    }
+    
+    .btn-success {
+      background: var(--success-color);
+    }
+    
+    .btn-success:hover {
+      background: #40c057;
+    }
+    
+    .btn-warning {
+      background: var(--warning-color);
+      color: var(--text-color);
+    }
+    
+    input[type="text"], 
+    input[type="password"],
+    input[type="email"],
+    textarea,
+    select {
+      padding: 0.8rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border: 2px solid var(--medium-gray);
+      border-radius: 8px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    input[type="text"]:focus, 
+    input[type="password"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(78, 70, 220, 0.2);
+    }
+    
+    input::placeholder {
+      color: #adb5bd;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+    
+    .course-card {
+      background: var(--light-gray);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .course-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .course-icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .course-info {
+      flex: 1;
+    }
+    
+    .course-title {
+      font-weight: 500;
+      margin: 0 0 0.3rem 0;
+    }
+    
+    .course-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--medium-gray);
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    
+    .quiz-option {
+      display: block;
+      margin: 0.8rem 0;
+      padding: 0.8rem;
+      background: var(--light-gray);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .quiz-option:hover {
+      background: var(--medium-gray);
+    }
+    
+    .quiz-option input {
+      margin-right: 0.8rem;
+    }
+    
+    iframe {
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      border: none;
+      box-shadow: var(--shadow);
+    }
+    
+    .progress-container {
+      background: var(--medium-gray);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+      height: 30px;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+      color: var(--white);
+      text-align: center;
+      padding: 5px 0;
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    
+    .dashboard-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .dashboard-title {
+      font-size: 1.2rem;
+      margin-top: 0;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+    }
+    
+    .dashboard-title i {
+      margin-right: 0.8rem;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .user-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-right: 1rem;
+    }
+    
+    .user-details h3 {
+      margin: 0 0 0.3rem 0;
+      font-weight: 500;
+    }
+    
+    .user-details p {
+      margin: 0;
+      color: var(--dark-gray);
+    }
+    
+    .score-display {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 1rem 0;
+    }
+    
+    .summary-box {
+      background: var(--light-gray);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+    }
+    
+    .summary-title {
+      font-weight: 500;
+      margin-top: 0;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    
+    .badge-success {
+      background: var(--success-color);
+      color: white;
+    }
+    
+    .badge-warning {
+      background: var(--warning-color);
+      color: var(--text-color);
+    }
+    
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem;
+      background: var(--success-color);
+      color: white;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transform: translateX(200%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-graduation-cap"></i> ระบบสอบ ภาคิน 1.0</h1>
+  </header>
+
+  <div class="notification hidden" id="notification">
+    <i class="fas fa-check-circle"></i> <span id="notificationText">ดำเนินการเสร็จสิ้น</span>
+  </div>
+
+  <div class="container" id="loginPage">
+    <h2><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</h2>
+    <div class="form-group">
+      <label for="username">ชื่อผู้ใช้หรืออีเมล</label>
+      <input type="text" id="username" placeholder="กรุณากรอกชื่อผู้ใช้หรืออีเมล">
+    </div>
+    <div class="form-group">
+      <label for="password">รหัสผ่าน</label>
+      <input type="password" id="password" placeholder="กรุณากรอกรหัสผ่าน">
+    </div>
+    <div class="button-group">
+      <button onclick="login()"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+      <button class="btn-secondary" onclick="showRegisterPage()"><i class="fas fa-user-plus"></i> สมัครสมาชิก</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="registerPage">
+    <h2><i class="fas fa-user-plus"></i> สมัครสมาชิก</h2>
+    <div class="form-group">
+      <label for="regName">ชื่อ-นามสกุล</label>
+      <input type="text" id="regName" placeholder="กรุณากรอกชื่อและนามสกุล">
+    </div>
+    <div class="form-group">
+      <label for="regEmail">อีเมล</label>
+      <input type="email" id="regEmail" placeholder="กรุณากรอกอีเมล">
+    </div>
+    <div class="form-group">
+      <label for="regUsername">ชื่อผู้ใช้</label>
+      <input type="text" id="regUsername" placeholder="กรุณากรอกชื่อผู้ใช้">
+    </div>
+    <div class="form-group">
+      <label for="regPassword">รหัสผ่าน</label>
+      <input type="password" id="regPassword" placeholder="กรุณากรอกรหัสผ่าน">
+    </div>
+    <div class="button-group">
+      <button onclick="register()"><i class="fas fa-save"></i> สมัครสมาชิก</button>
+      <button class="btn-secondary" onclick="showLoginPage()"><i class="fas fa-arrow-left"></i> กลับไปหน้าเข้าสู่ระบบ</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="coursePage">
+    <h2><i class="fas fa-book-open"></i> รายวิชาสอบอาจารย์เเพทย์จีน ณรงค์ศักดิ์ รุ่งเรืองสกุลไชย</h2>
+    <div class="course-grid">
+      <div class="course-card" onclick="goToLesson('html')">
+        <div class="course-icon"><i class="fas fa-code"></i></div>
+        <div class="course-info">
+          <h3 class="course-title">เตรียมสอบ HSK 5 级 <span class="badge badge-success" id="htmlBadge">เสร็จสิ้น</span></h3>
+          <p>เรียนรู้พื้นฐาน HSK 5 级 สำหรับผู้เริ่มต้น</p>
+          <div class="course-progress">
+            <div class="progress-fill" id="htmlProgress"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="course-card" onclick="goToLesson('python')">
+        <div class="course-icon"><i class="fab fa-python"></i></div>
+        <div class="course-info">
+          <h3 class="course-title">เเบบทดสอบ诊断.1 <span class="badge badge-warning" id="pythonBadge">กำลังเรียน</span></h3>
+          <p>เเบบทดสอบ诊断.1 </p>
+          <div class="course-progress">
+            <div class="progress-fill" id="pythonProgress"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="course-card" onclick="goToLesson('database')">
+        <div class="course-icon"><i class="fas fa-database"></i></div>
+        <div class="course-info">
+          <h3 class="course-title">เเบบทดสอบรายวิชาฝังเข็ม</h3>
+          <p>เเบบทดสอบรายวิชาฝังเข็ม</p>
+          <div class="course-progress">
+            <div class="progress-fill" id="dbProgress"></div>
+          </div>
+        </div>
+      </div>
+
+<div class="course-card" onclick="goToLesson('chiniese')">
+        <div class="course-icon"><i class="fab fa-chiniese"></i></div>
+        <div class="course-info">
+          <h3 class="course-title">เตรียมสอบใบประกอบวิชาชีพครูปฐมวัย <span class="badge badge-warning" id="chinieseBadge">กำลังเรียน</span></h3>
+          <p>เตรียมสอบใบประกอบวิชาชีพครูปฐมวัย</p>
+          <div class="course-progress">
+            <div class="progress-fill" id="chinieseProgress"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button onclick="showDashboard()"><i class="fas fa-chart-line"></i> ดูความคืบหน้า</button>
+      <button class="btn-secondary" onclick="logout()"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <!-- Lesson Pages -->
+  <div class="container hidden" id="lessonPage">
+    <h2 id="lessonTitle"><i class="fas fa-chalkboard-teacher"></i> บทเรียน</h2>
+    <div id="lessonContent"></div>
+    
+    <div class="button-group">
+      <button id="quizBtn" class="hidden"><i class="fas fa-question-circle"></i> ทำแบบทดสอบ</button>
+      <button class="btn-secondary" onclick="goToCourse()"><i class="fas fa-arrow-left"></i> กลับหน้ารายวิชา</button>
+    </div>
+  </div>
+
+  <!-- Quiz Pages -->
+  <div class="container hidden" id="quizPage">
+    <h2 id="quizTitle"><i class="fas fa-question-circle"></i> แบบทดสอบท้ายบท</h2>
+    <p id="quizDescription">กรุณาเลือกคำตอบที่ถูกต้องที่สุด:</p>
+    <div id="quizQuestions"></div>
+    
+    <div class="button-group">
+      <button onclick="submitQuiz()"><i class="fas fa-paper-plane"></i> ส่งคำตอบ</button>
+      <button class="btn-secondary" id="backToLessonBtn"><i class="fas fa-arrow-left"></i> กลับไปบทเรียน</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="resultPage">
+    <h2><i class="fas fa-poll"></i> ผลคะแนน</h2>
+    <div class="score-display" id="scoreText">-</div>
+    <div class="summary-box">
+      <p id="resultMessage"></p>
+      <div id="answerFeedback"></div>
+    </div>
+    <div class="button-group">
+      <button onclick="showDashboard()"><i class="fas fa-chart-line"></i> ดูรายงานผล</button>
+      <button class="btn-secondary" onclick="goToCourse()"><i class="fas fa-book-open"></i> กลับหน้ารายวิชา</button>
+    </div>
+  </div>
+
+  <div class="container hidden" id="dashboardPage">
+    <div class="user-info">
+      <div class="user-icon">
+        <i class="fas fa-user-graduate"></i>
+      </div>
+      <div class="user-details">
+        <h3 id="studentName">-</h3>
+        <p id="studentEmail">-</p>
+      </div>
+    </div>
+    
+    <div class="dashboard-card">
+      <h3 class="dashboard-title"><i class="fas fa-trophy"></i> ผลการเรียน</h3>
+      <p><strong>คะแนนรวม:</strong> <span id="totalScore">0</span> / 6</p>
+      <p><strong>ความคืบหน้า:</strong></p>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+    </div>
+    
+    <div class="dashboard-card">
+      <h3 class="dashboard-title"><i class="fas fa-clipboard-check"></i> สรุปผล</h3>
+      <div id="courseProgress"></div>
+    </div>
+    
+    <div class="button-group">
+      <button class="btn-success" onclick="goToCourse()"><i class="fas fa-book-open"></i> เรียนต่อ</button>
+      <button class="btn-secondary" onclick="logout()"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
+    </div>
+  </div>
+  
+
+  <script>
+    // User Data
+    const users = [
+      { username: "student", password: "1234", name: "ณรงค์ศักดิ์ รุ่งเรืองสกุลไชย", email: "student@example.com" }
+    ];
+    
+    // Courses Data
+    const courses = {
+      html: {
+        title: "วิชาพื้นฐานการเขียนเว็บไซต์",
+        description: "เรียนรู้พื้นฐาน HTML, CSS และ JavaScript สำหรับผู้เริ่มต้น",
+        lessons: [
+          {
+            title: "HTML เบื้องต้น",
+            content: `
+              <p>HTML (HyperText Markup Language) เป็นภาษาพื้นฐานสำหรับสร้างโครงสร้างของเว็บไซต์ โดยใช้แท็ก (Tags) ต่างๆ ในการกำหนดส่วนประกอบของหน้าเว็บ</p>
+              <iframe width="100%" height="400" src="https://www.youtube.com/embed/9gTw2EDkaDQ" frameborder="0" allowfullscreen></iframe>
+              <div class="summary-box">
+                <h3 class="summary-title"><i class="fas fa-lightbulb"></i> สรุปเนื้อหา</h3>
+                <ul>
+                  <li>HTML ใช้สำหรับสร้างโครงสร้างเว็บเพจ</li>
+                  <li>ประกอบด้วยแท็กต่างๆ เช่น &lt;html&gt;, &lt;head&gt;, &lt;body&gt;</li>
+                  <li>สามารถใส่เนื้อหา, รูปภาพ, ลิงก์ และอื่นๆ ได้</li>
+                </ul>
+              </div>
+            `,
+            quiz: {
+              title: "แบบทดสอบท้ายบท: HTML",
+              description: "กรุณาเลือกคำตอบที่ถูกต้องที่สุด:",
+              questions: [
+                {
+                  text: "1. HTML คืออะไร?",
+                  options: [
+                    { text: "โปรแกรมภาษา Python", correct: false },
+                    { text: "ภาษาสำหรับตกแต่งเว็บไซต์", correct: false },
+                    { text: "ภาษาสำหรับสร้างโครงสร้างเว็บไซต์", correct: true }
+                  ]
+                },
+                {
+                  text: "2. แท็กใดใช้สำหรับสร้างลิงก์?",
+                  options: [
+                    { text: "&lt;img&gt;", correct: false },
+                    { text: "&lt;a&gt;", correct: true },
+                    { text: "&lt;div&gt;", correct: false }
+                  ]
+                },
+                {
+                  text: "3. แท็กใดใช้สำหรับใส่รูปภาพ?",
+                  options: [
+                    { text: "&lt;img&gt;", correct: true },
+                    { text: "&lt;picture&gt;", correct: false },
+                    { text: "&lt;photo&gt;", correct: false }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        progress: 0,
+        completed: false
+      },
+      python: {
+        title: "เเบบทดสอบ诊断.1",
+        description: "เเบบทดสอบ诊断.1",
+        lessons: [
+          {
+            title: "เเบบทดสอบ诊断.1",
+            content: `
+              <p>เเบบทดสอบ诊断.1</p>
+                <h3 class="summary-title"><i class="fas fa-lightbulb"></i> สรุปเนื้อหา</h3>
+                <ul>
+                  <li>ข้อสอบเป็นข้อปรนัย 40 ข้อ 10 คะเเนน</li>
+                  <li>มีระบบบันทึกตรวจสอบด้วย AI</li>
+                  <li>สามารถเชคผลสอบได้เเบบ Rial time</li>
+                </ul>
+              </div>
+            `,
+            quiz: {
+              title: "เเบบทดสอบ诊断.1",
+              description: "กรุณาเลือกคำตอบที่ถูกต้องที่สุด:",
+              questions: [
+                {
+                  text: "1.下列除哪项外，脉率均较快?",
+                  options: [
+                    { text: "A) 结脉 ", correct: true },
+                    { text: "B) 疾脉", correct: false },
+                    { text: "C) 数脉", correct: false },
+                    { text: "D) 促脉", correct: false },
+                    { text: "E) 动脉", correct: false }
+                  ]
+                },
+                 {
+                  text: "2.下列何脉脉位较短?",
+                  options: [
+                    { text: "A) 紧脉 ", correct: false },
+                    { text: "B) 涩脉	", correct: false },
+                    { text: "C) 动脉", correct: true},
+                    { text: "D) 滑脉	", correct: false },
+                    { text: "E) 长脉", correct: false }
+                  ]
+                },
+                {
+                  text: "3.下列哪两种脉不能相兼?",
+                  options: [
+                    { text: "A) 弦脉与滑脉 ", correct: false },
+                    { text: "B) 洪脉与数脉", correct: false },
+                    { text: "C) 濡脉与细脉", correct: false },
+                    { text: "D) 沉脉与紧脉", correct: false },
+                    { text: "E) 涩脉与滑脉", correct: true }
+                  ]
+                },
+                {
+                  text: "4.下列何组脉象主湿证?",
+                  options: [
+                    { text: "A) 细、弱、微 ", correct: false },
+                    { text: "B) 缓、结、弱", correct: false },
+                    { text: "C) 濡、细、缓", correct: true},
+                    { text: "D) 结、代、促", correct: false },
+                    { text: "E) 细、散、微", correct: false }
+                  ]
+                },
+                {
+                  text: "5.下列哪项是濡脉与弱脉的共同特征?",
+                  options: [
+                    { text: "A) 脉来无力  ", correct: true },
+                    { text: "B) 沉而无力", correct: false },
+                    { text: "C) 浮而无力 ", correct: false },
+                    { text: "D) 细而无力", correct: false },
+                    { text: "E) 脉细如线", correct: false }
+                  ]
+                },
+                {
+                  text: "6.下列哪项是紧脉的主病?",
+                  options: [
+                    { text: "A) 痰饮 ", correct: false },
+                    { text: "B) 寒证", correct: true  },
+                    { text: "C) 实热 ", correct: false },
+                    { text: "D) 血瘀", correct: false },
+                    { text: "E) 气滞", correct: false }
+                  ]
+                },
+                {
+                  text: "7.湿证常见脉象为?",
+                  options: [
+                    { text: "A) 洪脉 ", correct: false },
+                    { text: "B) 芤脉", correct: false },
+                    { text: "C) 弦脉", correct: false },
+                    { text: "D) 濡脉", correct: true },
+                    { text: "E) 涩脉", correct: false }
+                  ]
+                },
+                {
+                  text: "8.疟疾常见脉象为?",
+                  options: [
+                    { text: "A) 洪脉 ", correct: false},
+                    { text: "B) 芤脉", correct: false },
+                    { text: "C) 弦脉", correct: true },
+                    { text: "D) 濡脉", correct: false },
+                    { text: "E) 涩脉", correct: false }
+                  ]
+                },
+                {
+                  text: "9.血瘀常见脉象为?",
+                  options: [
+                    { text: "A) 洪脉  ", correct: false },
+                    { text: "B) 芤脉	", correct: false },
+                    { text: "C) 弦脉", correct: false },
+                    { text: "D) 濡脉", correct: false },
+                    { text: "E) 涩脉", correct: true }
+                  ]
+                },
+                    {
+                  text: "10.失血常见脉象为?",
+                  options: [
+                    { text: "A) 洪脉  ", correct: true },
+                    { text: "B) 芤脉	", correct: false },
+                    { text: "C) 弦脉", correct: false },
+                    { text: "D) 濡脉", correct: false },
+                    { text: "E) 涩脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "11.脉有“根”主要指?",
+                  options: [
+                    { text: "A) 从容、和缓、流利  ", correct: false },
+                    { text: "B) 节律整齐，柔和有力", correct: false },
+                    { text: "C) 不沉不浮，不大不小", correct: false },
+                    { text: "D) 尺脉沉取，应指有力", correct: true },
+                    { text: "E) 痞满", correct: false }
+                  ]
+                },
+                  {
+                  text: "12.腹部按诊时，病人应取?",
+                  options: [
+                    { text: "A) 正坐位  ", correct: false },
+                    { text: "B) 左侧卧位	", correct: false },
+                    { text: "C) 右侧卧位 ", correct: false },
+                    { text: "D) 俯卧位", correct: false },
+                    { text: "E) 仰卧位 ", correct: true }
+                  ]
+                },
+                  {
+                  text: "13.按中府穴有明显压痛者，为?",
+                  options: [
+                    { text: "A) 肝病  ", correct: false },
+                    { text: "B) 胃病	", correct: false },
+                    { text: "C) 肺病 ", correct: true },
+                    { text: "D) 肾病	 ", correct: false },
+                    { text: "E) 心病", correct: false }
+                  ]
+                },
+                  {
+                  text: "14.下列脉象脉律不齐的是?",
+                  options: [
+                    { text: "A) 芤脉  ", correct: false },
+                    { text: "B) 弱脉	", correct: false },
+                    { text: "C) 短脉  ", correct: false },
+                    { text: "D) 疾脉	", correct: false },
+                    { text: "E) 散脉", correct: true }
+                  ]
+                },
+                  {
+                  text: "15.既可见于里寒证，又可见于里热证的脉象是?",
+                  options: [
+                    { text: "A) 迟脉   ", correct: true},
+                    { text: "B) 实脉		", correct: false },
+                    { text: "C) 革脉", correct: false },
+                    { text: "D) 牢脉	", correct: false },
+                    { text: "E) 疾脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "16.既可见于病人，又可见于正常人的脉象是?",
+                  options: [
+                    { text: "A) 革脉    ", correct: false },
+                    { text: "B) 紧脉", correct: false },
+                    { text: "C) 缓脉 ", correct: true },
+                    { text: "D) 细脉", correct: false },
+                    { text: "E) 代脉", correct: false}
+                  ]
+                },
+                  {
+                  text: "17.洪脉的脉象特征是?",
+                  options: [
+                    { text: "A) 浮大中空 ", correct: false },
+                    { text: "B) 浮而搏指	", correct: false },
+                    { text: "C) 来盛去衰，滔滔满指", correct: true },
+                    { text: "D) 厥厥动摇 ", correct: false },
+                    { text: "E) 轻刀刮竹", correct: false  }
+                  ]
+                },
+                  {
+                  text: "18.脉象特征为沉按实大弦长的脉是 ?",
+                  options: [
+                    { text: "A) 紧脉    ", correct: false },
+                    { text: "B) 革脉	", correct: false },
+                    { text: "C) 实脉 ", correct: false },
+                    { text: "D) 牢脉	", correct: true },
+                    { text: "E) 涩脉", correct: false  }
+                  ]
+                },
+                  {
+                  text: "19.戴阳证时，可见?",
+                  options: [
+                    { text: "A) 细脉  ", correct: false },
+                    { text: "B) 浮脉	", correct: true },
+                    { text: "C) 短脉", correct: false },
+                    { text: "D) 芤脉", correct: false },
+                    { text: "E) 代脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "20.下列不属于病脉的是?",
+                  options: [
+                    { text: "A) 弦紧脉   ", correct: false },
+                    { text: "B) 沉迟脉	", correct: false },
+                    { text: "C) 浮滑脉 ", correct: false },
+                    { text: "D) 斜飞脉", correct: true },
+                    { text: "E) 弦细脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "21.脉洪大等同而无病象者，称为 ?",
+                  options: [
+                    { text: "A) 六阴脉  ", correct: false },
+                    { text: "B) 真脏脉	", correct: false },
+                    { text: "C) 有根脉 ", correct: false },
+                    { text: "D) 六阳脉", correct: true },
+                    { text: "E) 有神脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "22.形成脉象的最主要脏器是?",
+                  options: [
+                    { text: "A) 肺  ", correct: false },
+                    { text: "B) 心	", correct: true},
+                    { text: "C) 脾  ", correct: false },
+                    { text: "D) 肝", correct: false },
+                    { text: "E) 肾", correct: false }
+                  ]
+                },
+                  {
+                  text: "23.我国最早的脉学专著是?",
+                  options: [
+                    { text: "A) <濒湖脉学>  ", correct: false },
+                    { text: "B) <内经>", correct: false },
+                    { text: "C) <诊家正眼>    ", correct: false },
+                    { text: "D) <伤寒论>", correct: false },
+                    { text: "E) <脉经> ", correct: true}
+                  ]
+                },
+                  {
+                  text: "24.浮脉主要表现为脉象哪种因素发生变化?",
+                  options: [
+                    { text: "A) 位      ", correct: true },
+                    { text: "B) 数		", correct: false },
+                    { text: "C) 律    ", correct: false },
+                    { text: "D) 势	", correct: false},
+                    { text: "E) 形 ", correct: false }
+                  ]
+                },
+                  {
+                  text: "25.按虚里，下列哪项属病理表现 ?",
+                  options: [
+                    { text: "A) 按之应手   ", correct: false },
+                    { text: "B) 动而不紧", correct: false },
+                    { text: "C) 节律清晰 ", correct: false },
+                    { text: "D) 缓而不怠 ", correct: false},
+                    { text: "E) 动微不显", correct: true }
+                  ]
+                },
+                  {
+                  text: "26.下述哪项属于“体征”？",
+                  options: [
+                    { text: "A) 心烦失眠 ", correct: false },
+                    { text: "B) 恶心欲吐", correct: false },
+                    { text: "C) 神疲乏力 ", correct: false },
+                    { text: "D) 手指麻木", correct: false},
+                    { text: "E) 面色淡", correct: true }
+                  ]
+                },
+                  {
+                  text: "27.久病畏寒主要与下列哪项有关？",
+                  options: [
+                    { text: "A) 风寒袭表 ", correct: false },
+                    { text: "B) 寒邪内侵", correct: false },
+                    { text: "C) 感受风邪", correct: false },
+                    { text: "D) 风湿外袭", correct: false},
+                    { text: "E) 阳气虚衰", correct: true }
+                  ]
+                },
+                  {
+                  text: "28.身重，嗜卧，疲乏多见于？",
+                  options: [
+                    { text: "A) 湿困脾阳", correct: false },
+                    { text: "B) 水湿泛滥", correct: false },
+                    { text: "C) 脾气虚，不能运化", correct: true },
+                    { text: "D) 热伤气阴", correct: false},
+                    { text: "E) 气血亏虚", correct: false }
+                  ]
+                },
+                  {
+                  text: "29.寒证或气血瘀滞可见？",
+                  options: [
+                    { text: "A) 黄色", correct: false },
+                    { text: "B) 赤色", correct: false },
+                    { text: "C) 青色", correct: true },
+                    { text: "D) 白色", correct: false},
+                    { text: "E) 黑色", correct: false }
+                  ]
+                },
+                  {
+                  text: "30.痰白而清稀，或有灰黑点者，属？",
+                  options: [
+                    { text: "A) 湿痰", correct: false },
+                    { text: "B) 寒痰", correct: true},
+                    { text: "C) 热痰 ", correct: false },
+                    { text: "D) 燥痰", correct: false},
+                    { text: "E) 风痰", correct: false }
+                  ]
+                },
+                  {
+                  text: "31.舌尖所候的脏腑一般是？?",
+                  options: [
+                    { text: "A) 肾", correct: false },
+                    { text: "B) 肝胆", correct: false },
+                    { text: "C) 心肺 ", correct: true },
+                    { text: "D) 脾胃", correct: false},
+                    { text: "E) 三焦", correct: false }
+                  ]
+                },
+                  {
+                  text: "32.哪种舌象主热毒炽盛，气血壅滞？",
+                  options: [
+                    { text: "A) 淡红舌", correct: false },
+                    { text: "B) 红绛舌", correct: false },
+                    { text: "C) 青紫舌 ", correct: false },
+                    { text: "D) 舌紫红而干枯", correct: true},
+                    { text: "E) 舌红而燥", correct: false }
+                  ]
+                },
+                  {
+                  text: "33.舌体瘦薄而色红降干燥为？",
+                  options: [
+                    { text: "A) 寒凝筋脉 ", correct: false },
+                    { text: "B) 痰湿内阻", correct: false },
+                    { text: "C) 热盛动风 ", correct: false },
+                    { text: "D) 气血俱虚", correct: false},
+                    { text: "E) 阴虚火旺", correct: true }
+                  ]
+                },
+                  {
+                  text: "34.苔黄而质腻多见于？",
+                  options: [
+                    { text: "A) 食积化腐 ", correct: true },
+                    { text: "B) 热入营分", correct: false },
+                    { text: "C) 寒湿内停", correct: false },
+                    { text: "D) 痰饮阻滞 ", correct: false},
+                    { text: "E) 外感风寒", correct: false }
+                  ]
+                },
+                  {
+                  text: "35.肝气郁结证病人的闻诊特点多为？",
+                  options: [
+                    { text: "A) 少气", correct: false },
+                    { text: "B) 呃逆", correct: false },
+                    { text: "C) 夺气 ", correct: false },
+                    { text: "D) 噫气", correct: false},
+                    { text: "E) 太息", correct: true }
+                  ]
+                },
+                  {
+                  text: "36.仲景《伤寒杂病论》中的三部诊法是指诊？",
+                  options: [
+                    { text: "A) 人迎、寸口、太溪 ", correct: false },
+                    { text: "B) 寸口、太溪、趺阳", correct: true },
+                    { text: "C) 神门、寸口、太溪 ", correct: false },
+                    { text: "D) 人迎、寸口、趺阳", correct: false},
+                    { text: "E) 人迎、寸口、太冲", correct: false }
+                  ]
+                },
+                  {
+                  text: "37.医生手指用力不轻不重，按至肌肉以体察脉象的方法称？",
+                  options: [
+                    { text: "A) 浮取", correct: false },
+                    { text: "B) 总按", correct: false },
+                    { text: "C) 沉取", correct: false },
+                    { text: "D) 中取", correct: true},
+                    { text: "E) 单诊", correct: false }
+                  ]
+                },
+                  {
+                  text: "38.下列哪种脉象具脉来缓慢，时有中止，止无定数的特征？",
+                  options: [
+                    { text: "A) 代脉", correct: false },
+                    { text: "B) 结脉", correct: true },
+                    { text: "C) 动脉", correct: false },
+                    { text: "D) 促脉", correct: false},
+                    { text: "E) 涩脉", correct: false }
+                  ]
+                },
+                  {
+                  text: "39.患者恶寒喜暖，肢冷，踡卧，面色淡白，口淡不渴，痰涎清稀，小便清长，大便稀溏，舌淡苔白而滑润，脉迟，证属?",
+                  options: [
+                    { text: "A) 表寒证", correct: false },
+                    { text: "B) 里寒证", correct: false },
+                    { text: "C) 虚寒证", correct: false },
+                    { text: "D) 实寒证 ", correct: true },
+                    { text: "E) 假寒证", correct: false }
+                  ]
+                },
+                  {
+                  text: "40.患者局部刺痛，拒按，肿块隆起，舌有瘀斑，脉涩，其病因应是？",
+                  options: [
+                    { text: "A) 血热致瘀", correct: false },
+                    { text: "B) 寒凝致瘀", correct: false },
+                    { text: "C) 气滞血瘀 ", correct: false },
+                    { text: "D) 瘀血内阻 ", correct: true},
+                    { text: "E) 气虚血瘀", correct: false }
+                  ]
+                },
+                 
+
+              ]
+            }
+          }
+        ],
+        progress: 0,
+        completed: false
+      },
+      database: {
+        title: "ระบบฐานข้อมูลเบื้องต้น",
+        description: "เรียนรู้พื้นฐานการออกแบบและใช้งานฐานข้อมูล",
+        lessons: [
+          {
+            title: "Python เบื้องต้น",
+            content: `
+              <p>Python เป็นภาษาโปรแกรมมิ่งระดับสูงที่อ่านง่ายและมีโครงสร้างที่ชัดเจน เหมาะสำหรับผู้เริ่มต้นเรียนการเขียนโปรแกรม</p>
+              <iframe width="100%" height="400" src="https://www.youtube.com/embed/_uQrJ0TkZlc" frameborder="0" allowfullscreen></iframe>
+              <div class="summary-box">
+                <h3 class="summary-title"><i class="fas fa-lightbulb"></i> สรุปเนื้อหา</h3>
+                <ul>
+                  <li>Python เป็นภาษาที่อ่านง่ายและมีโครงสร้างที่ชัดเจน</li>
+                  <li>สามารถใช้เขียนโปรแกรมได้หลากหลายประเภท</li>
+                  <li>มีไลบรารีมาตรฐานที่ครอบคลุมการทำงานพื้นฐาน</li>
+                </ul>
+              </div>
+            `, quiz: {
+              title: "แบบทดสอบท้ายบท: Python",
+              description: "กรุณาเลือกคำตอบที่ถูกต้องที่สุด:",
+              questions: [
+                {
+                  text: "1. Python เป็นภาษาโปรแกรมประเภทใด?",
+                  options: [
+                    { text: "ภาษา Low-level", correct: false },
+                    { text: "ภาษาเครื่อง", correct: false },
+                    { text: "ภาษา High-level", correct: true }
+                  ]
+                },
+                {
+                  text: "2. ข้อใดคือข้อดีของ Python?",
+                  options: [
+                    { text: "ความเร็วในการทำงานสูงที่สุด", correct: false },
+                    { text: "ใช้หน่วยความจำน้อยที่สุด", correct: false },
+                    { text: "โค้ดอ่านง่ายและเขียนง่าย", correct: true }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        progress: 0,
+        completed: false
+      },
+   
+      chiniese: {
+        title: "ระบบสอบเเพทย์จีน",
+        description: "ระบบสอบออนไลน์ เเพทย์จีน",
+        lessons: [
+          {
+            title: "ข้อสอบจบ อาจารย์เเพทย์จีน ณรงค์ศักดิ์",
+            content: `
+              <p>ข้อสอบจบ คณะสหเวชศาตร์ สาขาการเเพทย์เเผนจีน วิทยาลัยนครราชสีมา</p>
+              <div class="summary-box">
+                <h3 class="summary-title"><i class="fas fa-lightbulb"></i> สรุปเนื้อหา</h3>
+                <ul>
+                  <li>ข้อสอบเป็นข้อปรนัย 50 ข้อ 50 คะเเนน</li>
+                  <li>มีระบบบันทึกตรวจสอบด้วย AI</li>
+                  <li>สามารถเชคผลสอบได้เเบบ Rial time</li>
+                </ul>
+              </div>
+            `, quiz: {
+              title: "แบบทดสอบ: วิชาชีพครู 2568",
+              description: "กรุณาเลือกคำตอบที่ถูกต้องที่สุด:",
+              questions: [
+                {
+                  text: "เครื่องมือใดไม่ได้ใช้วัดคุณลักษณะอันพึงประสงค์ด้านการเรียน?",
+                  options: [
+                    { text: "แบบทดสอบ ", correct: true },
+                    { text: "แบบสัมภาษณ์ ", correct: false },
+                    { text: "แบบสอบถาม", correct: false },
+                    { text: "แบบสังเกตพฤติกรรม", correct: false },
+                    { text: "แบบประเมินรายการ ", correct: false }
+                  ]
+                },
+                 {
+                  text: "เด็กหญิง ป.2 มีรูปร่างไม่สมส่วน อ้วน เตี้ย และถูกเพื่อนในชั้นเรียนล้อทำให้เด็กหญิงไม่อยากมาเรียน อ้างปวดท้องประจำเดือน ไม่สบาย ขาดเรียนบ้างถ้าท่านเป็นครูจะมีวิธีการพูดปรับเปลี่ยนพฤติกรรมอย่างไร ?",
+                  options: [
+                    { text: "เรียกคนล้อมาบอกต่อว่าต่อหน้าเพื่อนๆ ", correct: false },
+                    { text: "ให้เด็กทั้งสองไปปรับความเข้าใจกันเอง  ", correct: false },
+                    { text: "ให้คนล้อมาพบครูเป็นการส่วนตัว ทำไมถึงว่าเพื่อน", correct: true },
+                    { text: "แจ้งให้ผู้ปกครองทราบถึงพฤติกรรมการล้อเล่น ", correct: false },
+                    { text: "บอกกล่าวและตักเตือนนักเรียนที่ล้อไม่ให้ทำแบบนั้นอีก  ", correct: false }
+                  ]
+                },
+                  {
+                  text: "เด็กชั้นประถมศึกษาปีที่ 6 มีความประพฤติเรียบร้อย เรียนดี มีความรับผิดชอบ ร่าเริง จนแม่แต่งงานใหม่ และย้ายไปอยู่ในครอบครัวใหม่กับแม่ ผ่านไปได้ 1 เดือน เด็กเงียบซึม ไม่พูดคุยกับคนอื่นในครอบครัวใหม่ ชอบอยู่ร้านเกม จากสถานการณ์เด็กมีปัญหาพฤติกรรมด้านใด  ?",
+                  options: [
+                    { text: "เด็กติดเกม ", correct: false },
+                    { text: "ภาวะซึมเศร้า  ", correct: false },
+                    { text: "มีปัญหากับพ่อใหม่", correct: false },
+                    { text: "โกรธแม่ที่แต่งงานใหม", correct: false },
+                    { text: "ไม่สามารถปรับตัวเข้ากับครอบครัวใหม่แม่ได้ ", correct: true }
+                  ]
+                },
+                  {
+                  text: "จากสถานการณ์นี้ ครูกล่าวกับนักเรียน ว่า  “ถ้าไม่หยุดร้องไห้  ครูจะไม่รักนะคะ”?",
+                  options: [
+                    { text: "การลงโทษทางลบ  ", correct: true },
+                    { text: "การลงโทษทางบวก  ", correct: false },
+                    { text: "การเสริมแรงทางลบ ", correct: false },
+                    { text: "การเสริมแรงทางบวก ", correct: false },
+                    { text: "การเสริมแรงทางสังคม", correct: false}
+                  ]
+                },
+                {
+                  text: "จากสถานการณ์ ถ้าครูต้องการเขียนรายงานบทความวิจัย ครูจะต้องใช้โปรแกรมอัจฉริยะตัวไหนในการจัดเขียนรายงานบทความวิจัย”?",
+                  options: [
+                    { text: "text generation ", correct: true },
+                    { text: "image generation   ", correct: false },
+                    { text: "video generation  ", correct: false },
+                    { text: "code generation  ", correct: false },
+                    { text: "speech generation", correct: false}
+                  ]
+                },
+                {
+                  text: "คณะทำงานจะทำงานร่วมกัน ทำได้ทุกที่ทุกเวลา และหลากหลายช่องทางต้องใช้ตามข้อใด ”?",
+                  options: [
+                    { text: "Data ", correct: false },
+                    { text: "Block chain   ", correct: false },
+                    { text: "Cloud storage  ", correct: true },
+                    { text: "Internet of things   ", correct: false },
+                    { text: "Generative artificial intelligence ", correct: false}
+                  ]
+                },
+                {
+                  text: "มีเด็กโดนบูลลี่ จนกลายเป็นคนมีปัญหาสุขภาพจิต ใช้จิตวิทยาไหนพูดกับเด็ก และทำให้เด็กอยากมาโรงเรียน ”?",
+                  options: [
+                    { text: "คุยกะเพื่อนให้เพื่อนช่วยปลอบ", correct: false },
+                    { text: "เลี่ยงเพื่อนโดนบูลลี่ อย่าไปเข้าใกล", correct: false },
+                    { text: "ทำไมนักเรียนไม่อยากมาโรงเรียน", correct: false },
+                    { text: "ถ้าไม่มาโรงเรียนจะหักคะแนนนะ", correct: false },
+                    { text: "มีอะไรเล่าให้ครูฟังไหม เดี๋ยวครูจะช่วยนักเรียนนะ", correct: true}
+                  ]
+                },
+                {
+                  text: "คุณครูควรนำตัวชี้วัดใดมาเขียนจุดประสงค์การเรียนรู้ในด้านพุทธิพิสัย”?",
+                  options: [
+                    { text: "ตัวชี้วัดที่ 1 และตัวชี้วัดที่ 2 ", correct: true },
+                    { text: "ตัวชี้วัดที่ 1 และตัวชี้วัดที่ 3 ", correct: false },
+                    { text: "ตัวชี้วัดที่ 1 และตัวชี้วัดที่ 4 ", correct: false },
+                    { text: "ตัวที่วัดที่ 1 และตัวชี้วัดที่ 5 ", correct: false },
+                    { text: "ตัวที่วัดที่ 1 และตัวชี้วัดที่ 6  ", correct: false}
+                  ]
+                },
+                  {
+                  text: "คุณครูควรนำตัวชี้วัดใดมาเขียนจุดประสงค์การเรียนรู้ในด้านจิตพิสัย ”?",
+                  options: [
+                    { text: "ตัวชี้วัดที่ 1 และตัวชี้วัดที่ 2 ", correct: false },
+                    { text: "ตัวชี้วัดที่ 3 และตัวชี้วัดที่ 4 ", correct: false },
+                    { text: "ตัวชี้วัดที่ 5 และตัวชี้วัดที่ 6 ", correct: true },
+                    { text: "ตัวที่วัดที่ 1 และตัวชี้วัดที่ 6 ", correct: false },
+                    { text: "ตัวที่วัดที่ 2 และตัวชี้วัดที่ 6  ", correct:false}
+                  ]
+                },
+                {
+                  text: "คุณครูควรนำตัวชี้วัดใดมาเขียนจุดประสงค์การเรียนรู้ในด้านทักษะพิสัย ”?",
+                  options: [
+                    { text: "ตัวชี้วัดที่ 1 และตัวชี้วัดที่ 2 ", correct: false },
+                    { text: "ตัวชี้วัดที่ 3 และตัวชี้วัดที่ 4 ", correct: true },
+                    { text: "ตัวชี้วัดที่ 5 และตัวชี้วัดที่ 6 ", correct: false },
+                    { text: "ตัวที่วัดที่ 1 และตัวชี้วัดที่ 6 ", correct: false },
+                    { text: "ตัวที่วัดที่ 2 และตัวชี้วัดที่ 6  ", correct:false}
+                  ]
+                },
+                {
+                  text: "ข้อใดเป็นวิธีการวัดที่เหมาะสมที่สุด ในการวัดและการประเมินผลการเรียนรู้ด้านทักษะการทำงานเป็นทีมและภาวะความเป็นผู้นำ ?",
+                   options: [
+                    { text: "แบบทดสอบ ", correct: false },
+                    { text: "แบบสัมภาษณ์ ", correct: false },
+                    { text: "แบบสอบถาม", correct: false },
+                    { text: "แบบสังเกตพฤติกรรม", correct: true },
+                    { text: "แบบประเมินรายการ ", correct: false }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        progress: 0,
+        completed: false
+       }
+    
+    };
+    
+    // Current User and State
+    let currentUser = null;
+    let currentCourse = null;
+    let currentLesson = 0;
+    let userAnswers = [];
+    
+    // DOM Elements
+    const notification = document.getElementById("notification");
+    const notificationText = document.getElementById("notificationText");
+    
+    // Initialize the app
+    function init() {
+      updateCourseProgress();
+    }
+    
+    // Show notification
+    function showNotification(message, type = "success") {
+      notificationText.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.classList.add("show");
+      
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 3000);
+    }
+    
+    // User Authentication
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      
+      const user = users.find(u => 
+        (u.username === username || u.email === username) && 
+        u.password === password
+      );
+      
+      if (user) {
+        currentUser = user;
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("coursePage").classList.remove("hidden");
+        showNotification("เข้าสู่ระบบสำเร็จ");
+        updateCourseProgress();
+      } else {
+        showNotification("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", "error");
+      }
+    }
+    
+    function register() {
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const username = document.getElementById("regUsername").value;
+      const password = document.getElementById("regPassword").value;
+      
+      if (!name || !email || !username || !password) {
+        showNotification("กรุณากรอกข้อมูลให้ครบถ้วน", "error");
+        return;
+      }
+      
+      if (users.some(u => u.username === username || u.email === email)) {
+        showNotification("ชื่อผู้ใช้หรืออีเมลนี้มีอยู่แล้ว", "error");
+        return;
+      }
+      
+      users.push({ name, email, username, password });
+      showNotification("สมัครสมาชิกสำเร็จ กรุณาเข้าสู่ระบบ");
+      showLoginPage();
+    }
+    
+    function logout() {
+      currentUser = null;
+      document.getElementById("coursePage").classList.add("hidden");
+      document.getElementById("dashboardPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.remove("hidden");
+      showNotification("ออกจากระบบสำเร็จ");
+    }
+    
+    // Page Navigation
+    function showRegisterPage() {
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("registerPage").classList.remove("hidden");
+    }
+    
+    function showLoginPage() {
+      document.getElementById("registerPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.remove("hidden");
+    }
+    
+    function goToCourse() {
+      document.getElementById("lessonPage").classList.add("hidden");
+      document.getElementById("quizPage").classList.add("hidden");
+      document.getElementById("resultPage").classList.add("hidden");
+      document.getElementById("dashboardPage").classList.add("hidden");
+      document.getElementById("coursePage").classList.remove("hidden");
+      updateCourseProgress();
+    }
+    
+    function goToLesson(courseId) {
+      currentCourse = courseId;
+      currentLesson = 0;
+      loadLesson();
+      document.getElementById("coursePage").classList.add("hidden");
+      document.getElementById("lessonPage").classList.remove("hidden");
+    }
+    
+    function loadLesson() {
+      const course = courses[currentCourse];
+      const lesson = course.lessons[currentLesson];
+      
+      document.getElementById("lessonTitle").innerHTML = 
+        `<i class="fas fa-chalkboard-teacher"></i> บทเรียน: ${lesson.title}`;
+      document.getElementById("lessonContent").innerHTML = lesson.content;
+      
+      const quizBtn = document.getElementById("quizBtn");
+      if (lesson.quiz) {
+        quizBtn.classList.remove("hidden");
+        quizBtn.onclick = () => {
+          loadQuiz();
+          document.getElementById("lessonPage").classList.add("hidden");
+          document.getElementById("quizPage").classList.remove("hidden");
+        };
+      } else {
+        quizBtn.classList.add("hidden");
+      }
+    }
+    
+    function loadQuiz() {
+      const course = courses[currentCourse];
+      const lesson = course.lessons[currentLesson];
+      const quiz = lesson.quiz;
+      
+      document.getElementById("quizTitle").textContent = quiz.title;
+      document.getElementById("quizDescription").textContent = quiz.description;
+      
+      const quizQuestions = document.getElementById("quizQuestions");
+      quizQuestions.innerHTML = "";
+      
+      quiz.questions.forEach((q, i) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "quiz-question";
+        questionDiv.innerHTML = `<p><strong>${q.text}</strong></p>`;
+        
+        q.options.forEach((opt, j) => {
+          const optId = `q${i}_${j}`;
+          const option = document.createElement("label");
+          option.className = "quiz-option";
+          option.innerHTML = `
+            <input type="radio" name="q${i}" value="${j}" id="${optId}">
+            ${opt.text}
+          `;
+          questionDiv.appendChild(option);
+        });
+        
+        quizQuestions.appendChild(questionDiv);
+      });
+      
+      document.getElementById("backToLessonBtn").onclick = () => {
+        document.getElementById("quizPage").classList.add("hidden");
+        document.getElementById("lessonPage").classList.remove("hidden");
+      };
+    }
+    
+    function submitQuiz() {
+      const course = courses[currentCourse];
+      const lesson = course.lessons[currentLesson];
+      const quiz = lesson.quiz;
+      
+      userAnswers = [];
+      let score = 0;
+      let allAnswered = true;
+      
+      quiz.questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (!selected) {
+          allAnswered = false;
+          return;
+        }
+        
+        const answerIndex = parseInt(selected.value);
+        const isCorrect = q.options[answerIndex].correct;
+        userAnswers.push({
+          question: q.text,
+          answer: q.options[answerIndex].text,
+          correct: isCorrect,
+          correctAnswer: q.options.find(o => o.correct).text
+        });
+        
+        if (isCorrect) score++;
+      });
+      
+      if (!allAnswered) {
+        showNotification("กรุณาตอบคำถามให้ครบทุกข้อ", "error");
+        return;
+      }
+      
+      // Update course progress
+      course.progress = Math.round((score / quiz.questions.length) * 100);
+      if (course.progress >= 80) {
+        course.completed = true;
+      }
+      
+      // Show results
+      document.getElementById("quizPage").classList.add("hidden");
+      document.getElementById("resultPage").classList.remove("hidden");
+      
+      const scoreText = document.getElementById("scoreText");
+      const resultMessage = document.getElementById("resultMessage");
+      const answerFeedback = document.getElementById("answerFeedback");
+      
+      scoreText.textContent = `คุณได้ ${score} / ${quiz.questions.length} คะแนน`;
+      
+      if (score === quiz.questions.length) {
+        scoreText.style.color = "var(--success-color)";
+        resultMessage.innerHTML = `<i class='fas fa-check-circle' style='color: var(--success-color);'></i> ยินดีด้วย! คุณตอบถูกต้องทั้งหมด`;
+      } else if (score >= quiz.questions.length / 2) {
+        scoreText.style.color = "var(--warning-color)";
+        resultMessage.innerHTML = `<i class='fas fa-check-circle' style='color: var(--warning-color);'></i> ดีมาก! คุณตอบถูกต้อง ${score} จาก ${quiz.questions.length} ข้อ`;
+      } else {
+        scoreText.style.color = "var(--secondary-color)";
+        resultMessage.innerHTML = `<i class='fas fa-exclamation-circle' style='color: var(--secondary-color);'></i> คุณตอบถูกเพียง ${score} จาก ${quiz.questions.length} ข้อ`;
+      }
+      
+      // Show answer feedback
+      answerFeedback.innerHTML = "<h3>สรุปคำตอบ:</h3>";
+      userAnswers.forEach((ans, i) => {
+        const icon = ans.correct ? 
+          `<i class="fas fa-check" style="color: var(--success-color);"></i>` : 
+          `<i class="fas fa-times" style="color: var(--secondary-color);"></i>`;
+        
+        answerFeedback.innerHTML += `
+          <p><strong>${i+1}. ${ans.question}</strong></p>
+          <p>${icon} คำตอบของคุณ: ${ans.answer}</p>
+          ${!ans.correct ? `<p><i class="fas fa-lightbulb" style="color: var(--warning-color);"></i> คำตอบที่ถูกต้อง: ${ans.correctAnswer}</p>` : ''}
+        `;
+      });
+      
+      updateCourseProgress();
+      showNotification("ส่งแบบทดสอบสำเร็จ");
+    }
+    
+    function showDashboard() {
+      if (!currentUser) return;
+      
+      document.getElementById("coursePage").classList.add("hidden");
+      document.getElementById("resultPage").classList.add("hidden");
+      document.getElementById("dashboardPage").classList.remove("hidden");
+      
+      document.getElementById("studentName").textContent = currentUser.name;
+      document.getElementById("studentEmail").textContent = currentUser.email;
+      
+      // Calculate total progress
+      let totalScore = 0;
+      let maxScore = 0;
+      let completedCourses = 0;
+      
+      Object.values(courses).forEach(course => {
+        if (course.lessons.length > 0) {
+          maxScore += course.lessons[0].quiz?.questions.length || 0;
+          totalScore += course.progress * (course.lessons[0].quiz?.questions.length || 0) / 100;
+          if (course.completed) completedCourses++;
+        }
+      });
+      
+      document.getElementById("totalScore").textContent = totalScore;
+      
+      const progress = Math.round((totalScore / maxScore) * 100);
+      const bar = document.getElementById("progressBar");
+      bar.style.width = progress + "%";
+      bar.textContent = progress + "%";
+      
+      // Update course progress
+      const courseProgress = document.getElementById("courseProgress");
+      courseProgress.innerHTML = "";
+      
+      Object.entries(courses).forEach(([id, course]) => {
+        if (course.lessons.length > 0) {
+          const quizLength = course.lessons[0].quiz?.questions.length || 0;
+          const score = Math.round(course.progress * quizLength / 100);
+          
+          courseProgress.innerHTML += `
+            <p><strong>${course.title}:</strong> ${score} / ${quizLength} คะแนน</p>
+            <div class="progress-container" style="height: 10px; margin: 0.5rem 0 1.5rem 0;">
+              <div class="progress-bar" style="width: ${course.progress}%; height: 100%; font-size: 0;"></div>
+            </div>
+          `;
+        }
+      });
+    }
+    
+    function updateCourseProgress() {
+      if (!currentUser) return;
+      
+      // Update course cards
+      Object.entries(courses).forEach(([id, course]) => {
+        const progressFill = document.getElementById(`${id}Progress`);
+        if (progressFill) {
+          progressFill.style.width = `${course.progress}%`;
+        }
+        
+        const badge = document.getElementById(`${id}Badge`);
+        if (badge) {
+          if (course.completed) {
+            badge.textContent = "เสร็จสิ้น";
+            badge.className = "badge badge-success";
+          } else if (course.progress > 0) {
+            badge.textContent = "กำลังเรียน";
+            badge.className = "badge badge-warning";
+          } else {
+            badge.textContent = "ยังไม่เริ่ม";
+            badge.className = "badge";
+          }
+        }
+      });
+    }
+    
+    // Initialize the app
+    init();
+  </script>
+</body>
+</html>
+
